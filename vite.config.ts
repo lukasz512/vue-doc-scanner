@@ -65,7 +65,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: './', // required for GitHub Pages
+  base: '/vue-doc-scanner/',
   build: {
     outDir: 'dist',
   },
