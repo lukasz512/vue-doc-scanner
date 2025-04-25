@@ -5,7 +5,7 @@
   <SettingsMenu />
 </div>
     <transition name="fade" mode="out-in">
-      <RouterViewcp dist/index.html dist/404.html/>
+      <RouterView />
     </transition>
     <Toast v-if="toastMessage" :message="toastMessage" />
   </div>
