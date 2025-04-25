@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
 export default defineConfig({
-  base: '/document-scanner-pwa/', // 👈 adjust if hosted elsewhere
+  base: process.env.NODE_ENV === 'production' ? '/document-scanner-pwa/' : '/',
   plugins: [vue()],
   resolve: {
     alias: {

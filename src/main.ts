@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia'
 import { i18n } from './i18n'
+import { useQueueStore } from '@/stores/useQueueStore'
 
 import '@/assets/main.scss'
 
@@ -13,6 +14,12 @@ app.use(createPinia())
 app.use(i18n)
 
 app.mount('#app')
+
+
+const queueStore = useQueueStore()
+setTimeout(() => {
+    queueStore.autoSync()
+}, 10000);
 
 // Initialize language after Pinia and i18n
 import { useLanguageStore } from '@/stores/useLanguageStore'
