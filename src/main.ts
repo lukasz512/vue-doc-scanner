@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import router from './router';
 import './style.scss';
 
 const app = createApp(App);
@@ -14,4 +15,5 @@ if (savedTheme) {
   document.documentElement.setAttribute('data-theme', 'light');
 }
 
+app.use(router);
 app.mount('#app');
