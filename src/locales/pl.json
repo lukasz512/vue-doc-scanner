@@ -1,0 +1,21 @@
+{
+  "title": "📄 Dokumenty",
+  "description": "Zrób zdjęcie lub wybierz plik, aby przesłać do analizy.",
+  "scan": "📷 Zrób zdjęcie / Wybierz plik",
+  "syncQueue": "📦 Kolejka synchronizacji",
+  "noFiles": "Brak dokumentów w kolejce.",
+  "added": "Dodano",
+  "status": "Status",
+  "retry": "Ponów",
+  "delete": "Usuń",
+  "back": "← Powrót do skanowania",
+  "theme": {
+    "light": "☀️ Jasny motyw",
+    "dark": "🌙 Ciemny motyw"
+  },
+  "language": "Język",
+  "lang": {
+    "pl": "🇵🇱 Polski",
+    "en": "🇬🇧 English"
+  }
+}

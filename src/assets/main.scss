@@ -2,4 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles can go below (if needed) */
+:root {
+  --background: 0 0% 100%; /* jasne tło - czysta biel */
+  --foreground: 222.2 47.4% 11.2%; /* prawie czarny tekst */
+  --muted: 210 40% 96.1%; /* bardzo jasny szary dla kart */
+  --primary: 222.2 47.4% 11.2%; /* primary button color */
+  --primary-foreground: 0 0% 100%; /* biały tekst na przyciskach */
+}
+
+.dark {
+  --background: 222.2 47.4% 4%; /* grafitowe tło Notion Dark Mode */
+  --foreground: 210 40% 98%; /* bardzo jasny tekst */
+  --muted: 215 28% 17%; /* ciemniejsze karty */
+  --primary: 210 40% 98%; /* jaśniejsze linki w dark mode */
+  --primary-foreground: 222.2 47.4% 4%; /* czarny tekst na jasnym tle */
+}

@@ -1,0 +1,21 @@
+{
+  "title": "📄 Documents",
+  "description": "Take a photo or choose a file to upload for analysis.",
+  "scan": "📷 Take Photo / Choose File",
+  "syncQueue": "📦 Sync Queue",
+  "noFiles": "No documents in queue.",
+  "added": "Added",
+  "status": "Status",
+  "retry": "Retry",
+  "delete": "Delete",
+  "back": "← Back to scanner",
+    "theme": {
+    "light": "☀️ Light Theme",
+    "dark": "🌙 Dark Theme"
+  },
+  "language": "Language",
+  "lang": {
+    "pl": "🇵🇱 Polish",
+    "en": "🇬🇧 English"
+  }
+}
