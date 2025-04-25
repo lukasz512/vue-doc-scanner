@@ -1,5 +1,5 @@
 {
-  "name": "document-scanner-pwa",
+  "name": "vue-doc-scanner",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
