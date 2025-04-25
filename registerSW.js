@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/vue-doc-scanner/sw.js', { scope: '/vue-doc-scanner/' })})}
