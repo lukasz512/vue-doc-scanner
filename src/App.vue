@@ -5,13 +5,14 @@
   <SettingsMenu />
 </div>
     <transition name="fade" mode="out-in">
-      <router-view />
+      <RouterViewcp dist/index.html dist/404.html/>
     </transition>
     <Toast v-if="toastMessage" :message="toastMessage" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { RouterView } from 'vue-router'
 import ProgressBar from '@/components/ui/ProgressBar.vue'
 import SettingsMenu from '@/components/SettingsMenu.vue'
 
