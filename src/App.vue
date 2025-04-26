@@ -3,7 +3,6 @@
     <!-- Top Navigation -->
     <div class="flex justify-between items-center p-4 border-b border-border">
       <AnimatedLogo />
-      <SettingsMenu />
     </div>
 
     <!-- Main Content -->

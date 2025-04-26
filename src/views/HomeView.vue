@@ -1,93 +1,3 @@
-Home View Redesign
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
 <template>
   <div class="space-y-6">
     <!-- Placeholder / Preview -->
@@ -102,10 +12,14 @@ Home View Redesign
       />
 
       <div
-        v-if="previewBase64"
+        v-if="previewMode"
         class="aspect-video bg-muted rounded-xl overflow-hidden flex items-center justify-center shadow-md"
       >
-        <img :src="previewBase64" alt="Preview" class="object-cover w-full h-full" />
+        <img :src="previewImage" alt="Preview" class="object-cover w-full h-full" />
+        <div class="absolute bottom-0 left-0 right-0">
+          <ProgressBar :progress="previewProgress" />
+        </div>
+        <Button variant="destructive" class="absolute top-2 right-2" @click.stop="cancelCapture">Cancel</Button>
       </div>
 
       <div
@@ -118,22 +32,21 @@ Home View Redesign
         <p>Tap to Scan Document</p>
       </div>
     </div>
-
-    <!-- Navigation -->
-    <div class="flex justify-center gap-8 mt-4">
-      <RouterLink to="/" class="text-sm text-muted-foreground hover:text-foreground">Home</RouterLink>
-      <RouterLink to="/sync" class="text-sm text-muted-foreground hover:text-foreground">Sync</RouterLink>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useQueueStore } from '@/stores/useQueueStore'
+import ProgressBar from '@/components/ui/ProgressBar.vue'
+import Button from '@/components/ui/Button.vue'
 
 const fileInput = ref<HTMLInputElement | null>(null)
-const previewBase64 = ref<string>('')
 const queue = useQueueStore()
+const previewMode = ref(false)
+const previewImage = ref('')
+const previewProgress = ref(0)
+let previewTimer: number
 
 function triggerFileInput() {
   fileInput.value?.click()
@@ -145,11 +58,39 @@ function handleFileChange(event: Event) {
   if (!file || !file.type.startsWith('image/')) return
 
   const reader = new FileReader()
+  reader.onload = () => {
+    previewImage.value = reader.result as string
+    previewMode.value = true
+    startPreviewTimer(file)
+  }
+  reader.readAsDataURL(file)
+}
 
+function startPreviewTimer(file: File) {
+  previewProgress.value = 0
+  let elapsed = 0
+  const interval = 100
+  previewTimer = setInterval(() => {
+    elapsed += interval
+    previewProgress.value = (elapsed / 4000) * 100
+    if (elapsed >= 4000) {
+      clearInterval(previewTimer)
+      saveFile(file)
+    }
+  }, interval)
+}
+
+function cancelCapture() {
+  clearInterval(previewTimer)
+  previewMode.value = false
+  previewImage.value = ''
+}
+
+function saveFile(file: File) {
+  const reader = new FileReader()
   reader.onload = () => {
     const image = new Image()
     image.src = reader.result as string
-
     image.onload = () => {
       const MAX_WIDTH = 1200
       const scaleFactor = MAX_WIDTH / image.width
@@ -159,7 +100,6 @@ function handleFileChange(event: Event) {
       const canvas = document.createElement('canvas')
       canvas.width = newWidth
       canvas.height = newHeight
-
       const ctx = canvas.getContext('2d')
       ctx?.drawImage(image, 0, 0, newWidth, newHeight)
 
@@ -170,10 +110,10 @@ function handleFileChange(event: Event) {
         base64: compressedBase64
       })
 
-      previewBase64.value = compressedBase64
+      previewMode.value = false
+      previewImage.value = ''
     }
   }
-
   reader.readAsDataURL(file)
 }
 </script>
