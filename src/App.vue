@@ -18,6 +18,9 @@
     <!-- Bottom Navbar (only mobile) -->
     <BottomNavbar />
 
+    <!-- Toast Notification -->
+    <Toast v-if="toastStore.message" :message="toastStore.message" />
+
     <!-- Onboarding Tooltip -->
     <OnboardingTooltip v-if="showTooltip" />
   </div>
@@ -27,9 +30,12 @@
 import AnimatedLogo from '@/components/ui/AnimatedLogo.vue'
 import SettingsMenu from '@/components/SettingsMenu.vue'
 import BottomNavbar from '@/components/ui/BottomNavbar.vue'
+import Toast from '@/components/ui/Toast.vue'
 import OnboardingTooltip from '@/components/ui/OnboardingTooltip.vue'
+import { useToastStore } from '@/stores/useToastStore'
 import { ref, onMounted } from 'vue'
 
+const toastStore = useToastStore()
 const showTooltip = ref(false)
 
 onMounted(() => {

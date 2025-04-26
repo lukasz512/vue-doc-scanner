@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { uploadFile } from '@/lib/api'
+import { useToastStore } from '@/stores/useToastStore'
 
 export async function autoSync() {
   for (const item of this.items) {
@@ -84,20 +85,23 @@ export const useQueueStore = defineStore('queue', {
       this.items = this.items.filter(item => item.id !== id)
     },
 
-    async autoSync() {
-      if (this.items.some(item => item.status === 'pending' || item.status === 'failed')) {
-        alert('📡 Synchronization will start in 10 seconds...')
-      }
+async autoSync() {
+  const toastStore = useToastStore()
 
-      setTimeout(async () => {
-        for (const item of this.items) {
-          if (item.status === 'pending' || item.status === 'failed') {
-            item.status = 'syncing'
-            const success = await uploadFile(item.base64, item.fileName)
-            item.status = success ? 'synced' : 'failed'
-          }
-        }
-      }, 10000)
+  if (this.items.some(item => item.status === 'pending' || item.status === 'failed')) {
+    toastStore.show('📡 Synchronizacja rozpocznie się za 10 sekund...')
+  }
+
+  setTimeout(async () => {
+    for (const item of this.items) {
+      if (item.status === 'pending' || item.status === 'failed') {
+        item.status = 'syncing'
+        const success = await uploadFile(item.base64, item.fileName)
+        item.status = success ? 'synced' : 'failed'
+      }
     }
+    toastStore.show('✅ Synchronizacja zakończona!')
+  }, 10000)
+}
   }
 })
