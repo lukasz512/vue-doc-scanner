@@ -9,7 +9,9 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         muted: "hsl(var(--muted))",
         'primary-foreground': "hsl(var(--primary-foreground))",
-        primary: "hsl(var(--primary))"
+        primary: "hsl(var(--primary))",
+        border: 'hsl(var(--border))',
+        card: 'hsl(var(--card))'
       }
     }
   },

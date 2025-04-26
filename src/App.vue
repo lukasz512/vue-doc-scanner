@@ -1,28 +1,46 @@
 <template>
-  <div class="min-h-screen bg-background text-foreground transition-colors">
-    <ProgressBar />
-    <div class="flex justify-end p-4">
-  <SettingsMenu />
-</div>
-    <transition name="fade" mode="out-in">
-      <RouterView />
-    </transition>
-    <Toast v-if="toastMessage" :message="toastMessage" />
+  <div class="min-h-screen flex flex-col bg-background text-foreground">
+    <!-- Top Navigation -->
+    <div class="flex justify-between items-center p-4 border-b border-border">
+      <AnimatedLogo />
+      <SettingsMenu />
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 w-full max-w-notion mx-auto px-4 py-6">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+
+    <!-- Bottom Navbar (only mobile) -->
+    <BottomNavbar />
+
+    <!-- Onboarding Tooltip -->
+    <OnboardingTooltip v-if="showTooltip" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import ProgressBar from '@/components/ui/ProgressBar.vue'
+import AnimatedLogo from '@/components/ui/AnimatedLogo.vue'
 import SettingsMenu from '@/components/SettingsMenu.vue'
+import BottomNavbar from '@/components/ui/BottomNavbar.vue'
+import OnboardingTooltip from '@/components/ui/OnboardingTooltip.vue'
+import { ref, onMounted } from 'vue'
 
-import { ref } from 'vue'
-const toastMessage = ref('')
+const showTooltip = ref(false)
 
-function showToast(text: string) {
-  toastMessage.value = text
-  setTimeout(() => (toastMessage.value = ''), 4000)
-}
+onMounted(() => {
+  if (!localStorage.getItem('onboardingComplete')) {
+    showTooltip.value = true
+    setTimeout(() => {
+      showTooltip.value = false
+      localStorage.setItem('onboardingComplete', 'true')
+    }, 5000)
+  }
+})
 </script>
 
 <style scoped>

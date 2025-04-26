@@ -1,12 +1,12 @@
 <template>
   <div class="relative">
-    <button @click="toggleOpen" class="text-muted-foreground hover:text-foreground transition">
-      ⚙️
+    <button @click="toggleOpen" class="p-2 rounded-full hover:bg-muted transition">
+      <SettingsIcon class="w-6 h-6 text-foreground" />
     </button>
 
     <div
       v-if="open"
-      class="absolute right-0 mt-2 w-44 bg-background border border-muted rounded-xl shadow-lg p-2 space-y-2 z-50"
+      class="absolute right-0 mt-2 w-44 bg-background border border-border rounded-xl shadow-lg p-2 space-y-2 z-50"
     >
       <button
         @click="toggleTheme"
@@ -15,7 +15,7 @@
         {{ isDark ? t('theme.light') : t('theme.dark') }}
       </button>
 
-      <div class="border-t border-muted my-1"></div>
+      <div class="border-t border-border my-1"></div>
 
       <div class="space-y-1">
         <p class="text-xs text-muted-foreground px-2">{{ t('language') }}:</p>
@@ -40,6 +40,7 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/stores/useLanguageStore'
+import { SettingsIcon } from 'lucide-vue-next'
 
 const open = ref(false)
 const isDark = ref(false)
